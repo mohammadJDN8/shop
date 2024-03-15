@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useProducts } from "../context/ProductContext";
 import styles from "./ProductsPage.module.css";
 import { FaListUl } from "react-icons/fa";
@@ -8,6 +8,10 @@ import { BiSearchAlt2 } from "react-icons/bi";
 
 function ProductsPage() {
   const products = useProducts();
+  const [displayed, setDisplayed] = useState([]);
+  useEffect(() => {
+    setDisplayed(products);
+  }, [products]);
   const [search, setSearch] = useState("");
   const searchHandler = () => {
     console.log("search ");
@@ -33,15 +37,15 @@ function ProductsPage() {
       </div>
       <div className={styles.container}>
         <div className={styles.products}>
-          {!products.length && <Loader />}
-          {products.map((p) => (
+          {!displayed.length && <Loader />}
+          {displayed.map((p) => (
             <Card key={p.id} data={p} />
           ))}
         </div>
         <div>
           <div>
             <FaListUl />
-            <p>Cafegories</p>
+            <p>Categories</p>
             <ul onClick={categoryHandler}>
               <li>All</li>
               <li>Men's clothing</li>
