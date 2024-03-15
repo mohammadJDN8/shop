@@ -5,6 +5,7 @@ import { FaListUl } from "react-icons/fa";
 import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { filterProducts, searchProducts } from "../helper/Helper";
 
 function ProductsPage() {
   const products = useProducts();
@@ -15,7 +16,9 @@ function ProductsPage() {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState({});
   useEffect(() => {
-    console.log(query);
+    let finalProducts = searchProducts(products, query.search);
+    finalProducts = filterProducts(finalProducts, query.category);
+    setDisplayed(finalProducts);
   }, [query]);
   const searchHandler = () => {
     setQuery((query) => ({ ...query, search }));
