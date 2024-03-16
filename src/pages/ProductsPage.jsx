@@ -8,6 +8,7 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import {
   createQueryObject,
   filterProducts,
+  getInitialQuery,
   searchProducts,
 } from "../helper/Helper";
 import { useSearchParams } from "react-router-dom";
@@ -17,12 +18,14 @@ function ProductsPage() {
   const [displayed, setDisplayed] = useState([]);
   useEffect(() => {
     setDisplayed(products);
+    setQuery(getInitialQuery(searchParams));
   }, [products]);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     setSearchParams(query);
+    setSearch(query.search || "");
     let finalProducts = searchProducts(products, query.search);
     finalProducts = filterProducts(finalProducts, query.category);
     setDisplayed(finalProducts);
