@@ -6,6 +6,7 @@ import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { filterProducts, searchProducts } from "../helper/Helper";
+import { useSearchParams } from "react-router-dom";
 
 function ProductsPage() {
   const products = useProducts();
@@ -15,7 +16,9 @@ function ProductsPage() {
   }, [products]);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
+    setSearchParams(query);
     let finalProducts = searchProducts(products, query.search);
     finalProducts = filterProducts(finalProducts, query.category);
     setDisplayed(finalProducts);
