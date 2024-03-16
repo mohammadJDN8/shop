@@ -5,7 +5,11 @@ import { FaListUl } from "react-icons/fa";
 import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { filterProducts, searchProducts } from "../helper/Helper";
+import {
+  createQueryObject,
+  filterProducts,
+  searchProducts,
+} from "../helper/Helper";
 import { useSearchParams } from "react-router-dom";
 
 function ProductsPage() {
@@ -24,13 +28,13 @@ function ProductsPage() {
     setDisplayed(finalProducts);
   }, [query]);
   const searchHandler = () => {
-    setQuery((query) => ({ ...query, search }));
+    setQuery((query) => createQueryObject(query, { search }));
   };
   const categoryHandler = (event) => {
     const { tagName } = event.target;
     const category = event.target.innerText.toLocaleLowerCase();
     if (tagName !== "LI") return;
-    setQuery((query) => ({ ...query, category }));
+    setQuery((query) => createQueryObject(query, { category }));
   };
   return (
     <>
