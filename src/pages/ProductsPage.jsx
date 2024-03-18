@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useProducts } from "../context/ProductContext";
 import styles from "./ProductsPage.module.css";
-import { FaListUl } from "react-icons/fa";
+
 import Card from "../components/Card";
 import Loader from "../components/Loader";
-import { BiSearchAlt2 } from "react-icons/bi";
+
 import {
   createQueryObject,
   filterProducts,
@@ -12,6 +12,8 @@ import {
   searchProducts,
 } from "../helper/Helper";
 import { useSearchParams } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
+import SideBar from "../components/SideBar";
 
 function ProductsPage() {
   const products = useProducts();
@@ -30,28 +32,10 @@ function ProductsPage() {
     finalProducts = filterProducts(finalProducts, query.category);
     setDisplayed(finalProducts);
   }, [query]);
-  const searchHandler = () => {
-    setQuery((query) => createQueryObject(query, { search }));
-  };
-  const categoryHandler = (event) => {
-    const { tagName } = event.target;
-    const category = event.target.innerText.toLocaleLowerCase();
-    if (tagName !== "LI") return;
-    setQuery((query) => createQueryObject(query, { category }));
-  };
+
   return (
     <>
-      <div>
-        <input
-          type="text"
-          placeholder="Search ..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value.toLocaleLowerCase().trim())}
-        />
-        <button onClick={searchHandler}>
-          <BiSearchAlt2 />
-        </button>
-      </div>
+      <SearchBox search={search} setSearch={setSearch} setQuery={setQuery} />
       <div className={styles.container}>
         <div className={styles.products}>
           {!displayed.length && <Loader />}
@@ -60,17 +44,7 @@ function ProductsPage() {
           ))}
         </div>
         <div>
-          <div>
-            <FaListUl />
-            <p>Categories</p>
-            <ul onClick={categoryHandler}>
-              <li>All</li>
-              <li>Men's clothing</li>
-              <li>jewelery</li>
-              <li>electronics</li>
-              <li>Women's clothing</li>
-            </ul>
-          </div>
+          <SideBar setQuery={setQuery} />
         </div>
       </div>
     </>
