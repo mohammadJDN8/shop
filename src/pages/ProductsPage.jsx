@@ -44,7 +44,7 @@ function ProductsPage() {
           ))}
         </div>
         <div>
-          <SideBar setQuery={setQuery} />
+          <SideBar query={query} setQuery={setQuery} />
         </div>
       </div>
     </>

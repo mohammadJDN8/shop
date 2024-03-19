@@ -1,7 +1,15 @@
 import { FaListUl } from "react-icons/fa";
 import { createQueryObject } from "../helper/Helper";
+import styles from "./SideBar.module.css";
 
-function SideBar({ setQuery }) {
+function SideBar({ query, setQuery }) {
+  const categories = [
+    { id: 1, type: "All" },
+    { id: 2, type: "jewelery" },
+    { id: 3, type: "Men's clothing" },
+    { id: 4, type: "Electronics" },
+    { id: 5, type: "Women's clothing" },
+  ];
   const categoryHandler = (event) => {
     const { tagName } = event.target;
     const category = event.target.innerText.toLocaleLowerCase();
@@ -9,15 +17,15 @@ function SideBar({ setQuery }) {
     setQuery((query) => createQueryObject(query, { category }));
   };
   return (
-    <div>
-      <FaListUl />
-      <p>Categories</p>
+    <div className={styles.sidebar}>
+      <div>
+        <FaListUl />
+        <p>Categories</p>
+      </div>
       <ul onClick={categoryHandler}>
-        <li>All</li>
-        <li>Men's clothing</li>
-        <li>jewelery</li>
-        <li>electronics</li>
-        <li>Women's clothing</li>
+        {categories.map((item) => (
+          <li key={item.id} className={item.type.toLocaleLowerCase() ==query.category ? styles.selected : null} >{item.type}</li>
+        ))}
       </ul>
     </div>
   );
