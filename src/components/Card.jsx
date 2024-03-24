@@ -4,8 +4,13 @@ import { CgDetailsMore } from "react-icons/cg";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { shortenText } from "../helper/Helper";
 import styles from "./Card.module.css";
+import { useCart } from "../context/CartContext";
 
 function Card({ data }) {
+  const [state, dispatch] = useCart();
+  const clickHandler = () => {
+    dispatch({ type: "add", payload: data });
+  };
   const { id, image, title, price } = data;
   return (
     <div className={styles.card}>
@@ -17,7 +22,7 @@ function Card({ data }) {
           <CgDetailsMore />
         </Link>
         <div>
-          <button>
+          <button onClick={clickHandler}>
             <IoBagCheckOutline />
           </button>
         </div>
