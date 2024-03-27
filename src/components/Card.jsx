@@ -8,8 +8,9 @@ import { useCart } from "../context/CartContext";
 
 function Card({ data }) {
   const [state, dispatch] = useCart();
+  console.log(state)
   const clickHandler = () => {
-    dispatch({ type: "add", payload: data });
+    dispatch({ type: "ADD_ITEM", payload: data });
   };
   const { id, image, title, price } = data;
   return (
