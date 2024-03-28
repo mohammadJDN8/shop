@@ -1,6 +1,6 @@
 .searchBox {
   display: flex;
-  gap: 5px;
+
   margin-bottom: 50px;
 }
 .searchBox input {
@@ -8,6 +8,8 @@
   border-radius: 10px;
   padding: 0 100px 0 5px;
   font-weight: 500;
+  margin-right: 5px;
+  margin-left: 10px;
 }
 .searchBox button {
   background-color: #fe5d42;
